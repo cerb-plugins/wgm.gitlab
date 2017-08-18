@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.devblocks.com/schema/plugin.xsd">
+	<id>wgm.gitlab</id>
+	<name>GitLab Integration</name>
+	<description>This plugin provides integration with GitLab via their API. This plugin is intended to be a bridge used by other plugins to communicate with GitLab services.</description>
+	<author>Webgroup Media, LLC.</author>
+	<version>0.1.0</version>
+	<link>https://github.com/cerb-plugins/wgm.gitlab</link>
+	<image>plugin.png</image>
+
+	<!-- Requirements -->
+
+	<requires>
+		<app_version min="8.1" max="8.1.99" />
+	</requires>
+
+	<!-- Plugin Dependencies -->
+	
+	<dependencies>
+		<require plugin_id="cerberusweb.core" version="8.1.0" />
+	</dependencies>
+	
+	<!-- Extensions -->
+
+	<extensions>
+
+		<!-- Setup Page Menu Item -->
+
+		<extension point="cerberusweb.ui.page.menu.item">
+			<id>wgmgitlab.setup.menu.plugins.gitlab</id>
+			<name>GitLab</name>
+			<class>
+				<file>api/App.php</file>
+				<name>wgmgitlab_SetupPluginsMenuItem</name>
+			</class>
+			<params>
+				<param key="page_id" value="core.page.configuration" />
+				<param key="menu_id" value="core.setup.menu.services" />
+			</params>
+		</extension>
+		
+		<!-- Setup Page Sections -->
+		
+		<extension point="cerberusweb.ui.page.section">
+			<id>wgmgitlab.setup.gitlab</id>
+			<name>Setup Page GitLab Section</name>
+			<class>
+				<file>api/App.php</file>
+				<name>wgmgitlab_SetupSection</name>
+			</class>
+			<params>
+				<param key="page_id" value="core.page.configuration" />
+				<param key="uri" value="gitlab" />
+			</params>
+		</extension>
+		
+		<!-- Service Providers -->
+		
+		<extension point="cerb.service.provider">
+			<id>wgm.gitlab.service.provider</id>
+			<name>GitLab</name>
+			<class>
+				<file>api/App.php</file>
+				<name>ServiceProvider_GitLab</name>
+			</class>
+			<params>
+				<param key="contexts">
+					<value>
+						<data key="cerberusweb.contexts.app" />
+						<data key="cerberusweb.contexts.worker" />
+					</value>
+				</param>
+			</params>
+		</extension>
+		
+	</extensions> 
+</plugin>
